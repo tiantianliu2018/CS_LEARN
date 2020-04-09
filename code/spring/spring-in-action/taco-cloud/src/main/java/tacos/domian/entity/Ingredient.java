@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * @author liutiantian
@@ -14,6 +15,7 @@ import javax.persistence.Id;
  */
 @Data
 @Entity
+@Table(name = "ingredient")
 @RequiredArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE, force = true) // 无参构造参数
 public class Ingredient {

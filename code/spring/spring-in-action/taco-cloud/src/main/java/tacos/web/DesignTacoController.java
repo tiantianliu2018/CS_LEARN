@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import tacos.domian.IngredientRepository;
+import tacos.domian.TacoRepository;
 import tacos.domian.entity.Ingredient;
 import tacos.domian.entity.Ingredient.Type;
 import tacos.domian.entity.Order;
 import tacos.domian.entity.Taco;
-import tacosjdbc.IngredientRepository;
-import tacosjdbc.TacoRepository;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
