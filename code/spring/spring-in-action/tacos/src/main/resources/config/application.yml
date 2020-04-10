@@ -1,0 +1,26 @@
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/taco_cloud
+    username: root
+    password: root
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+  security:
+    user:
+      name: user
+      password: root
+
+  data:
+    rest:
+      base-path: /api
+  thymeleaf:
+    cache: false
+
+taco:
+  orders:
+    pageSize: 10

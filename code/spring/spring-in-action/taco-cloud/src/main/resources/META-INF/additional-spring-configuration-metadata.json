@@ -3,7 +3,12 @@
     {
       "name": "taco.orders.page-size",
       "type": "java.lang.String",
-      "description":"Sets the maximum number of orders to display in a list."
+      "description": "Sets the maximum number of orders to display in a list."
+    },
+    {
+      "name": "taco.orders.pageSize",
+      "type": "java.lang.String",
+      "description": "Description for taco.orders.pageSize."
     }
   ]
 }
