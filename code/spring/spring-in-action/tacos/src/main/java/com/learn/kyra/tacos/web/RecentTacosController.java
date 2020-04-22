@@ -8,6 +8,7 @@ import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import reactor.core.publisher.Flux;
 
 /**
  * @author liutiantian
@@ -25,8 +26,11 @@ public class RecentTacosController {
     @GetMapping("/recent")
     public Iterable<Taco> recentTacos(){
         PageRequest page = PageRequest.of(0, 12,
-                Sort.by("creatAt").descending());
+                Sort.by("createdAt").descending());
         return tacoRepository.findAll(page).getContent();
     }
 
+    public Flux<Taco> recentTaco(){
+        return null;
+    }
 }

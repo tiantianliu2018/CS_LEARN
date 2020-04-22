@@ -3,10 +3,12 @@ package com.learn.kyra.tacos.web;
 import com.learn.kyra.tacos.domain.TacoRepository;
 import com.learn.kyra.tacos.domain.entity.Taco;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 
 import java.util.Optional;
 
@@ -37,5 +39,11 @@ public class DesignTacoController {
     @ResponseStatus(HttpStatus.CREATED)
     public Taco postTaco(@RequestBody Taco taco){
         return tacoRepository.save(taco);
+    }
+
+    @GetMapping("/recent")
+    public Iterable<Taco> recentTacos(){
+        Pageable pageable = PageRequest.of(0,10, Sort.by("createdAt").descending());
+        return tacoRepository.findAll(pageable).getContent();
     }
 }
