@@ -45,6 +45,7 @@ public class T145_BinaryTreePostorderTraversal {
             res.add(top.val);
         }
         Collections.reverse(res);
+        
         return res;
     }
 
