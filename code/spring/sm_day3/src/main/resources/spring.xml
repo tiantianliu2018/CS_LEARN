@@ -13,11 +13,37 @@
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <!--注册 mapper 配置文件-->
-        <property name="mapperLocations">
-            <array>
-                <value>classpath:com/learn/mapper/UserDAOMapper.xml</value>
-            </array>
-        </property>
+        <!--注册 mapper 配置文件 通用方式 -->
+        <property name="mapperLocations" value="classpath:com/learn/mapper/*.xml"/>
+        <!--配置相关别名-->
+        <property name="typeAliasesPackage" value="com.learn.entity"/>
+
+    </bean>
+
+    <!--创建 DAO 组件-->
+<!--    <bean id="userDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">-->
+<!--        &lt;!&ndash;注入 sqlSessionFactory &ndash;&gt;-->
+<!--        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>-->
+<!--        &lt;!&ndash;注入接口的全限定名&ndash;&gt;-->
+<!--        <property name="mapperInterface" value="com.learn.dao.UserDAO"/>-->
+<!--    </bean>-->
+
+    <!--一次创建所有的 Dao -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--注入 sqlSessionFactory -->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <!-- 扫描 dao 接口所在的包-->
+        <property name="basePackage" value="com.learn.dao"/>
+    </bean>
+
+    <!--管理 service 组件 -->
+    <bean id="userService" class="com.learn.service.UserServiceImpl">
+        <property name="userDAO" ref="userDAO"/>
+        <property name="transactionManager" ref="transactionManager"/>
+    </bean>
+
+    <!--数据源线程安全-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
     </bean>
 </beans>

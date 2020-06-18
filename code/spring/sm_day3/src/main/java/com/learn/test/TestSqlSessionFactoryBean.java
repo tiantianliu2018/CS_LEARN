@@ -1,5 +1,7 @@
 package com.learn.test;
 
+import com.learn.dao.UserDAO;
+import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -11,6 +13,10 @@ public class TestSqlSessionFactoryBean {
     public static void main(String[] args) {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
         SqlSessionFactory sqlSessionFactory = (SqlSessionFactory) context.getBean("sqlSessionFactory");
-        System.out.println(sqlSessionFactory.openSession());
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        System.out.println(sqlSession);
+
+        UserDAO userDAO = sqlSession.getMapper(UserDAO.class);
+        userDAO.findAll().forEach(System.out::println);
     }
 }

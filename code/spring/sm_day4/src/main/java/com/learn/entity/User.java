@@ -4,7 +4,7 @@ import java.util.Date;
 
 /**
  * @author Kelly
- * @create 2020-06-10 07:50
+ * @create 2020-06-14 08:24
  */
 public class User {
     private String id;
@@ -13,11 +13,6 @@ public class User {
     private Date birthday;
 
     public User() {
-    }
-
-    public User(String name, int age) {
-        this.name = name;
-        this.age = age;
     }
 
     public User(String id, String name, int age, Date birthday) {
