@@ -15,7 +15,6 @@ public class T28_ImplementStrStr {
     public int strStr(String haystack, String needle) {
         if (needle == null || needle.length() == 0) return 0;
         int i = 0, j = 0;
-        int start = 0;
         while (i < haystack.length() && j < needle.length()){
             if (haystack.charAt(i) == needle.charAt(j)){
                 i++;

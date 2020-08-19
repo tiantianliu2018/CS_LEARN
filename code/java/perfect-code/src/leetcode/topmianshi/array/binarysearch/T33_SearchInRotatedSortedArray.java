@@ -1,4 +1,4 @@
-package leetcode.topmianshi.array;
+package leetcode.topmianshi.array.binarysearch;
 
 /**
  * @author Kelly

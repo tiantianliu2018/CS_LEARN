@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--创建数据源-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/db1?characterEncoding=UTF-8"/>
+        <property name="username" value="root"/>
+        <property name="password" value="root"/>
+    </bean>
+
+    <!--创建 SQLSessionFactory-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations" value="classpath:com/learn/mapper/*.xml"/>
+        <property name="typeAliasesPackage" value="com.learn.entity"/>
+    </bean>
+
+    <!--创建 DAO-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--注入 sqlSessionFactory dao 接口所在的包-->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <property name="basePackage" value="com.learn.dao"/>
+    </bean>
+
+    <!--创建事务管理器-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!--注入 datasource -->
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--创建事务环绕通知并进行细粒度控制-->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <!--
+            事务传播
+            propagation 事务的传播属性
+                   REQUIRED  需要事务，如果外层没有事务 则会开启新的事务  如果外层存在事务，则融入当前事务
+                   SUPPORTS  支持事务，如果外层没有事务 不会开启新的事务  如果外层存在事务，则融入当前事务
+                   REQUIRES_NEW 每次开启新的事务，如果有外层事务，外层事务挂起
+                   NOT_SUPPORTED  不支持事务，外层存在事务，挂起，自己以非事务方式运行
+                   NEVER  存在事务报错
+                   MANDATORY 强制事务  没有事务报错
+            -->
+            <tx:method name="save*" propagation="REQUIRED"/>
+            <tx:method name="update*" propagation="REQUIRED"/>
+            <tx:method name="delete*" propagation="REQUIRED"/>
+            <tx:method name="find*" propagation="SUPPORTS"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <!--配置事务切面-->
+    <aop:config>
+        <aop:pointcut id="pc" expression="execution(* com.learn.service.*ServiceImpl.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="pc"/>
+    </aop:config>
+
+
+    <!--管理 service 层组件-->
+    <bean id="userService" class="com.learn.service.UserServiceImpl">
+        <property name="userDAO" ref="userDAO"/>
+    </bean>
+</beans>

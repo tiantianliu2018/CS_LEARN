@@ -1,4 +1,4 @@
-package leetcode.topmianshi.traceback;
+package leetcode.topmianshi.array;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ public class T22_GenerateParentheses {
     /**
      * @param left 左括号还有几个没用
      * @param right 右括号还有几个没用
-     * @param curr
+     * @param curr  当前括号序列
      */
     private void dfs(List<String> res, int left, int right, String curr) {
         if (left == 0 && right == 0) {

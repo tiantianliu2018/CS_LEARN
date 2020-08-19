@@ -1,0 +1,13 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.learn.dao.UserDAO">
+
+    <insert id="save" parameterType="User">
+        insert into user values (#{id}, #{name}, #{age}, #{birthday})
+    </insert>
+
+    <select id="findAll" resultType="User">
+        select id, name, age, birthday from user
+    </select>
+
+
+</mapper>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+
+<!--    localhost:端口号/项目名/user/findAll -->
+    <package name="user" extends="struts-default" namespace="/user">
+        <action name="findAll" class="userAction" method="findAll">
+            <result name="success">/showAll.jsp</result>
+        </action>
+    </package>
+</struts>
